@@ -3,9 +3,32 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,PermissionsAndroid, ActivityIndicator} from 'react-native';
 import Storage from './src/helper/storage'
+
 import Login from './src/screens/auth/login'
 import Home from './src/screens/home'
+import splashScreen from 'react-native-splash-screen'
 const baseURL = 'https://nyx-in.herokuapp.com/api'
+
+import { createStackNavigator,createAppContainer } from 'react-navigation';
+
+
+
+
+
+const AppNavigator = createStackNavigator({
+  LoginS: {
+    screen: Login, navigationOptions: { header: null }
+  },
+  HomeS: {
+    screen: Home, navigationOptions: { header: null }
+  },
+  
+  
+
+});
+
+const AppStack = createAppContainer(AppNavigator);
+
 
 
 export default class App extends Component{
@@ -13,10 +36,11 @@ export default class App extends Component{
   constructor(props)
   {
     super(props)
-    this.state=
-    {
-      location:null
-    }
+   
+  }
+  state=
+  {
+    location:null
   }
   componentWillMount()
   {
@@ -42,7 +66,7 @@ export default class App extends Component{
 
   componentDidMount()
   {
-  
+    splashScreen.hide()
   }
   findCoordinates = () => {
     navigator.geolocation.getCurrentPosition(
@@ -60,7 +84,9 @@ export default class App extends Component{
           loaded: true,
           location:position
         });
-     
+        Storage.setItem('location',position);
+        Storage.setItem('places',data);
+
       });
       },
       error => alert(error.message),
@@ -87,9 +113,9 @@ export default class App extends Component{
     if(this.state.gotoHome==false)
     { 
        return(
-        <View style={styles.container}>
-          <Login/>
-       </View>
+        // <View style={styles.container}>
+          <AppStack/>
+      //  </View>
       );
     }else{
       if(this.state.loaded) {

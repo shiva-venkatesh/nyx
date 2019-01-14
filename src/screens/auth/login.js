@@ -16,6 +16,7 @@ import { Button } from '../../helper/button'
 import Storage from '../../helper/storage'
 const baseURL = 'https://nyx-in.herokuapp.com/api'
 
+
 export default class Login extends Component {
   constructor(props) {
     super(props)
@@ -64,6 +65,38 @@ export default class Login extends Component {
       
   }
 
+  onPressSignup=()=> {
+    console.log(this.state.email)
+    var url = `${baseURL}/v1/auth/login?email=${this.state.email}&password=${this.state.password}`;
+
+    fetch(baseURL + `/v1/auth/register`, {
+      method: 'post',
+      body: JSON.stringify({
+         email: this.state.email,
+         password:this.state.password,
+         phone: this.state.phone,
+         name:this.state.name})
+  })// fetch(url)
+      .then(response => response.json())
+      .then((response) => {
+        // console.log(data[0].restaurant.name)
+        if(response.auth==true)
+        {
+            Storage.setItem('user',response.token);
+            
+        }else
+        {
+          
+            setTimeout(()=>alert('Cannot complete signup'),1000)
+          
+        }
+
+
+      }).catch((error) => {
+        // console.log("ERRR:"+ error);
+    })
+      
+  }
   render() {
     return(
       <View style={styles.loginContainer}>
@@ -90,7 +123,10 @@ export default class Login extends Component {
             <Button
               // onPress={() => console.log('Pressed login') }
               children={this.state.buttonText}
-              onPress={()=>this.onPressLogIn()}
+              onPress={
+                // ()=>this.onPressLogIn()
+                () => this.props.navigation.navigate('HomeS')
+              }
             />
              <Text>Not signed up yet?</Text>
               <Button
@@ -123,7 +159,7 @@ export default class Login extends Component {
             <Button
               // onPress={() => console.log('Pressed login') }
               children={"Sign up"}
-              onPress={()=>this.onPressLogIn()}
+              onPress={()=>this.onPressSignup()}
             />
              <Text>Login instead?</Text>
               <Button
