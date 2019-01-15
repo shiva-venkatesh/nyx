@@ -34,6 +34,11 @@ export default class Login extends Component {
   componentDidMount() {
     
   }
+  emailValidator = (val) => {
+    return /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(
+      val
+    );
+  };
 
   onPressLogIn=()=> {
     console.log(this.state.email)
@@ -66,35 +71,64 @@ export default class Login extends Component {
   }
 
   onPressSignup=()=> {
-    console.log(this.state.email)
-    var url = `${baseURL}/v1/auth/login?email=${this.state.email}&password=${this.state.password}`;
-
-    fetch(baseURL + `/v1/auth/register`, {
-      method: 'post',
-      body: JSON.stringify({
-         email: this.state.email,
-         password:this.state.password,
-         phone: this.state.phone,
-         name:this.state.name})
-  })// fetch(url)
-      .then(response => response.json())
-      .then((response) => {
-        // console.log(data[0].restaurant.name)
-        if(response.auth==true)
-        {
-            Storage.setItem('user',response.token);
-            
-        }else
-        {
-          
-            setTimeout(()=>alert('Cannot complete signup'),1000)
-          
-        }
-
-
-      }).catch((error) => {
-        // console.log("ERRR:"+ error);
-    })
+    // console.log(this.state.email)
+    // var url = `${baseURL}/v1/auth/login?email=${this.state.email}&password=${this.state.password}`;
+    if(this.state.name=='')
+    {
+      setTimeout(()=>alert('You must enter a name'),1000)
+      return false
+    }
+    else if(this.state.phone=='')
+    {
+      setTimeout(()=>alert('You must enter a phone number'),1000)
+      return false
+    }
+    else if(this.state.email=='')
+    {
+      setTimeout(()=>alert('You must enter a email address'),1000)
+      return false
+    }
+    else if(this.state.password=='')
+    {
+      setTimeout(()=>alert('You must enter a password'),1000)
+      return false
+    }
+    else{
+      var validateEmail= emailValidator(this.state.email)
+      if(!validateEmail)
+      {
+        setTimeout(()=>alert('You must enter a valid email'),1000)
+        return false
+      }
+      else
+      {
+        fetch(baseURL + `/v1/auth/register`, {
+          method: 'post',
+          body: JSON.stringify({
+             email: this.state.email,
+             password:this.state.password,
+             phone: this.state.phone,
+             name:this.state.name})
+      })// fetch(url)
+          .then(response => response.json())
+          .then((response) => {
+            // console.log(data[0].restaurant.name)
+            if(response.auth==true)
+            {
+                Storage.setItem('user',response.token);
+                
+            }else
+            {
+                setTimeout(()=>alert('Cannot complete signup'),1000) 
+            }
+    
+    
+          }).catch((error) => {
+            // console.log("ERRR:"+ error);
+        })
+      }
+    }
+   
       
   }
   render() {

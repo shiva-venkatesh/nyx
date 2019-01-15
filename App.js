@@ -40,7 +40,8 @@ export default class App extends Component{
   }
   state=
   {
-    location:null
+    location:null,
+    gotoHome:null
   }
   componentWillMount()
   {
@@ -110,31 +111,43 @@ export default class App extends Component{
   
   
   render() {
-    if(this.state.gotoHome==false)
-    { 
-       return(
-        // <View style={styles.container}>
-          <AppStack/>
-      //  </View>
-      );
-    }else{
-      if(this.state.loaded) {
-        return (
-          <Home
-            user={this.state.user}
-            location={this.state.location}
-            places={this.state.places}
-          />
+    if(this.state.gotoHome!=null)
+    {
+      if(this.state.gotoHome==false)
+      { 
+         return(
+          // <View style={styles.container}>
+            <AppStack/>
+        //  </View>
         );
-      }
-      else{
-        return (
-          <View style={styles.centeredSpinner}>
-            <ActivityIndicator size="large" color="#413C3B" />
-          </View>
-        )
+      }else{
+        if(this.state.loaded) {
+          return (
+            <Home
+              user={this.state.user}
+              location={this.state.location}
+              places={this.state.places}
+            />
+          );
+        }
+        else{
+          return (
+            <View style={styles.centeredSpinner}>
+              <ActivityIndicator size="large" color="#413C3B" />
+            </View>
+          )
+        }
       }
     }
+    else
+    {
+      return (
+        <View style={styles.centeredSpinner}>
+          <ActivityIndicator size="large" color="#413C3B" />
+        </View>
+      )
+    }
+   
    
     // return (
       
