@@ -47,6 +47,11 @@ export default class Login extends Component {
     fetch(`${baseURL}/v1/auth/login`, {
       method: 'post',
       body: JSON.stringify({email: this.state.email,password:this.state.password})
+      ,  headers:{
+        "Origin":"",
+        "Accept":"application/json",
+        "Content-type":"application/json"
+      }
   })// fetch(url)
       .then(response => response.json())
       .then((response) => {
