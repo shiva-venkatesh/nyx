@@ -44,7 +44,7 @@ export default class Login extends Component {
     console.log(this.state.email)
     var url = `${baseURL}/v1/auth/login?email=${this.state.email}&password=${this.state.password}`;
 
-    fetch(baseURL + `/v1/auth/login`, {
+    fetch(`${baseURL}/v1/auth/login`, {
       method: 'post',
       body: JSON.stringify({email: this.state.email,password:this.state.password})
   })// fetch(url)
@@ -54,6 +54,7 @@ export default class Login extends Component {
         if(response.auth==true)
         {
             Storage.setItem('user',response.token);
+            this.props.navigation.navigate('HomeS')
             
         }else
         {
@@ -94,7 +95,7 @@ export default class Login extends Component {
       return false
     }
     else{
-      var validateEmail= emailValidator(this.state.email)
+      var validateEmail= this.emailValidator(this.state.email)
       if(!validateEmail)
       {
         setTimeout(()=>alert('You must enter a valid email'),1000)
@@ -102,13 +103,19 @@ export default class Login extends Component {
       }
       else
       {
-        fetch(baseURL + `/v1/auth/register`, {
+        fetch(`${baseURL}/v1/auth/register`, {
           method: 'post',
           body: JSON.stringify({
+             phone: this.state.phone,
              email: this.state.email,
              password:this.state.password,
-             phone: this.state.phone,
-             name:this.state.name})
+             name:this.state.name
+            }),
+            headers:{
+              "Origin":"",
+              "Accept":"application/json",
+              "Content-type":"application/json"
+            }
       })// fetch(url)
           .then(response => response.json())
           .then((response) => {
@@ -116,6 +123,7 @@ export default class Login extends Component {
             if(response.auth==true)
             {
                 Storage.setItem('user',response.token);
+                this.props.navigation.navigate('HomeS')
                 
             }else
             {
@@ -158,8 +166,8 @@ export default class Login extends Component {
               // onPress={() => console.log('Pressed login') }
               children={this.state.buttonText}
               onPress={
-                // ()=>this.onPressLogIn()
-                () => this.props.navigation.navigate('HomeS')
+                ()=>this.onPressLogIn()
+               
               }
             />
              <Text>Not signed up yet?</Text>
