@@ -11,10 +11,6 @@ const baseURL = 'https://nyx-in.herokuapp.com/api'
 
 import { createStackNavigator,createAppContainer } from 'react-navigation';
 
-
-
-
-
 const AppNavigator = createStackNavigator({
   LoginS: {
     screen: Login, navigationOptions: { header: null }
