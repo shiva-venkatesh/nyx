@@ -146,7 +146,7 @@ export default class Login extends Component {
   }
   render() {
     return(
-      <View style={styles.loginContainer}>
+      <ScrollView style={styles.loginContainer}>
         <View style={styles.Image}>
           <Image source={require('./nyx-icon.png')} />
         </View>
@@ -217,7 +217,7 @@ export default class Login extends Component {
              
           }
          
-      </View>
+      </ScrollView>
     )
   }
 }
