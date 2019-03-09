@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import {
-  StyleSheet,   
+  StyleSheet,
   View,
   ScrollView,
   TouchableOpacity,
@@ -13,11 +13,11 @@ import {
 
 import { SearchBar, Tile } from 'react-native-elements'
 import FeedCard from '../feedCard';
+import EventDetails from '../eventDetails';
 
 const baseURL = 'https://nyx-in.herokuapp.com/api'
 
 export default class Discover extends Component {
-  
   state = {
     events: [],
     activeEvent: {}
@@ -30,7 +30,7 @@ export default class Discover extends Component {
     this.setActiveEvent = this.setActiveEvent.bind(this);
     this.renderEventDetails = this.renderEventDetails.bind(this);
   }
-  
+
   componentDidMount() {
     const events_url = `${baseURL}/v1/events`
     fetch(events_url)
@@ -42,7 +42,7 @@ export default class Discover extends Component {
         });
       })
   }
-  
+
   renderTiles() {
       return(
         <View style={styles.container}>
@@ -83,7 +83,7 @@ export default class Discover extends Component {
         cancelButtonTitle="Cancel" />
     )
   }
-  
+
   renderEvents() {
     if(this.state.events.length > 0) {
       console.log('Gets here')
@@ -94,7 +94,7 @@ export default class Discover extends Component {
             key={event._id}
             activeOpacity={1}
           >
-            <FeedCard cardTitle={event.name} cardPicture={event.vertical_cover_image} key={event._id}/>            
+            <FeedCard cardTitle={event.name} cardPicture={event.vertical_cover_image} key={event._id}/>
           </TouchableOpacity>
         )
       })
@@ -107,29 +107,26 @@ export default class Discover extends Component {
       return(
         <View style={[styles.spinnerContainer, styles.horizontal]}>
           <ActivityIndicator size="large" color="#413C3B" />
-        </View>        
+        </View>
       )
     }
   }
-  
+
   setActiveEvent(event) {
     this.setState({
       activeEvent: Object.assign({}, event)
     })
   }
-  
+
   renderEventDetails() {
-    console.log('here again')
-    console.log(this.state.activeEvent.map_link)
-    return(
-      <WebView
-        source={{uri: this.state.activeEvent.map_link}}
-        style={styles.webview}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        startInLoadingState={true}
-      />
-    )
+    if(this.state.activeEvent) {
+      return(
+        <EventDetails
+          event={this.state.activeEvent}
+        />
+      )
+    }
+    return null
   }
 
   render() {
@@ -181,7 +178,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10
-  },  
+  },
   placeHolderTextColor: {
     color: '#FFFFFF'
   },
