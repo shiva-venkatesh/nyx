@@ -72,16 +72,18 @@ export default class Feed extends Component {
       )
     });
     return(
-      <ScrollView style={styles.bgContainer}>
-        <Text style={styles.feedCardsHeadingContainer}>
-          <Text style={styles.feedCardsHeading}>
-            Closest
+      <ScrollView horizontal={true} style={styles.bgContainer}>
+        <View>
+          <Text style={styles.feedCardsHeadingContainer}>
+            <Text style={styles.feedCardsHeading}>
+              Closest
+            </Text>
+            <Text style={styles.feedCardsText}>
+              {' to you.'}
+            </Text>
           </Text>
-          <Text style={styles.feedCardsText}>
-            {' to you.'}
-          </Text>
-        </Text>
-          {cards}
+        </View>
+        {cards}
       </ScrollView>
     );
   }
@@ -101,7 +103,7 @@ export default class Feed extends Component {
 
   render() {
     return(
-      <ScrollView showsVerticalScrollIndicator={false} styles={styles.container}>
+      <ScrollView horizontal={true} styles={styles.container}>
         {Object.keys(this.state.selectedPlace).length === 0 && this.state.selectedPlace.constructor === Object ? this.renderListOfPlaces() : this.renderPlaceDetails()}
       </ScrollView>
     )
@@ -115,6 +117,7 @@ const styles = StyleSheet.create({
   },
   bgContainer: {
     // backgroundColor: ''
+    flexDirection: 'column'
   },
   pill_objects: {
     marginTop: 15

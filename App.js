@@ -147,14 +147,6 @@ export default class App extends Component{
         </View>
       )
     }
-   
-   
-    // return (
-      
-    //   <View style={styles.container}>
-    //      <Login/>
-    //   </View>
-    // );
   }
 }
 
