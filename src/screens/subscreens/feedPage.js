@@ -16,20 +16,40 @@ import { Icon } from 'react-native-elements';
 import FeedCard from '../feedCard';
 // import Pill from '../../ui-components/pill';
 import PlaceDetails from '../placeDetails';
+import Collections from '../collections'
 
 export default class Feed extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedPlace: {}
+      selectedPlace: {},
+      showCollections: false,
+      collections: []
     }
     this.setPlace = this.setPlace.bind(this);
+    this.openCollections = this.openCollections.bind(this);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     this.resetSelectedPlace = this.resetSelectedPlace.bind(this);
   }
 
   componentDidMount() {
+    const baseURL = 'https://nyx-in.herokuapp.com/api'
+    const collections_url = `${baseURL}/v1/places/collections/all?lat=${this.props.location.coords.latitude}&long=${this.props.location.coords.longitude}`
+    fetch(collections_url)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data + ' response from the collections API')
+        this.setState({
+          collections: [].concat(data)
+        });
+      })
+  }
 
+  openCollections() {
+    console.log('openCollections called')
+    this.setState({
+      showCollections: true
+    }, () => console.log(this.state.showCollections))
   }
 
   resetSelectedPlace() {
@@ -39,11 +59,11 @@ export default class Feed extends Component {
   }
 
   componentWillMount() {
-      BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
   componentWillUnmount() {
-      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
   handleBackButtonClick() {
@@ -75,13 +95,18 @@ export default class Feed extends Component {
     });
     return(
       <ScrollView contentContainerStyle={styles.bgContainer}>
-        <View style={styles.iconContainer}>
-            <View style={styles.collectionHeadingContainer}>
-              <Text style={styles.collectionText}>
-                Explore curated collections of places in your city!
-              </Text>
+          <TouchableOpacity
+            onPress={() => this.openCollections()}
+            activeOpacity={1}
+          >
+            <View style={styles.iconContainer}>
+                <View style={styles.collectionHeadingContainer}>
+                  <Text style={styles.collectionText}>
+                    Explore curated collections of places in your city!
+                  </Text>
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
         <View contentContainerStyle={styles.bgInnerContainer}>
           <Text style={styles.feedCardsHeadingContainer}>
             <Text style={styles.feedCardsHeading}>
@@ -112,9 +137,21 @@ export default class Feed extends Component {
     )
   }
 
-  render() {
+  renderCollections() {
     return(
       <ScrollView showsVerticalScrollIndicator={false} styles={styles.container}>
+        <Collections collections={this.state.collections}/>
+      </ScrollView>
+    )
+  }
+
+  render() {
+    if(this.state.showCollections) {
+      console.log('gets here')
+      return this.renderCollections();
+    }
+    return(
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
         {Object.keys(this.state.selectedPlace).length === 0 && this.state.selectedPlace.constructor === Object ? this.renderListOfPlaces() : this.renderPlaceDetails()}
       </ScrollView>
     )
@@ -124,7 +161,7 @@ export default class Feed extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#DCDCDC'
+    // backgroundColor: '#DCDCDC'
   },
   iconContainer: {
     marginTop: 10,
