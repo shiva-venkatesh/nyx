@@ -106,7 +106,8 @@ export default class App extends Component{
           places: data,
           loaded: true
         });
-      });
+      })
+      .catch((err) => alert('Failed to fetch places'))
   };
   
   

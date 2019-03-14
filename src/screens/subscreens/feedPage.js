@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { BackHandler } from 'react-native';
 
 import {
   StyleSheet,   // CSS-like styles
@@ -8,8 +7,11 @@ import {
   ScrollView,
   Image,
   Linking,
+  BackHandler,
   TouchableOpacity
 } from 'react-native'
+
+import { Icon } from 'react-native-elements';
 
 import FeedCard from '../feedCard';
 // import Pill from '../../ui-components/pill';
@@ -72,16 +74,27 @@ export default class Feed extends Component {
       )
     });
     return(
-      <ScrollView style={styles.bgContainer}>
-        <Text style={styles.feedCardsHeadingContainer}>
-          <Text style={styles.feedCardsHeading}>
-            Closest
+      <ScrollView contentContainerStyle={styles.bgContainer}>
+        <View style={styles.iconContainer}>
+            <View style={styles.collectionHeadingContainer}>
+              <Text style={styles.collectionText}>
+                Explore curated collections of places in your city!
+              </Text>
+            </View>
+        </View>
+        <View contentContainerStyle={styles.bgInnerContainer}>
+          <Text style={styles.feedCardsHeadingContainer}>
+            <Text style={styles.feedCardsHeading}>
+              Closest
+            </Text>
+            <Text style={styles.feedCardsText}>
+              {' to you.'}
+            </Text>
           </Text>
-          <Text style={styles.feedCardsText}>
-            {' to you.'}
-          </Text>
-        </Text>
+        </View>
+        <ScrollView>
           {cards}
+        </ScrollView>
       </ScrollView>
     );
   }
@@ -113,8 +126,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#DCDCDC'
   },
+  iconContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  collectionHeadingContainer: {
+    backgroundColor: '#64818F'
+  },
+  collectionText: {
+    color: 'white',
+    margin: 10
+  },
   bgContainer: {
-    // backgroundColor: ''
+
+  },
+  bgInnerContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   pill_objects: {
     marginTop: 15
