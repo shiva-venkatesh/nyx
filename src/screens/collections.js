@@ -7,7 +7,8 @@ import {
   ScrollView,
   Image,
   Linking,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 
 import { Divider, Button, Text, Tile } from 'react-native-elements';
@@ -20,13 +21,12 @@ export default class Collections extends Component {
 
   renderTiles() {
     const collectionTiles = this.props.collections.map((collection) => {
-      var tileImage = collection.image_url;
       return(
-        <Tile
-          imageSrc={{uri: tileImage}}
-          title={collection.title}
-          caption={collection.description}
-        />
+        <View key={collection.collection_id}>
+          <Image
+            source={{ uri: collection.image_url }}
+          />
+        </View>
       );
     })
     return collectionTiles;
