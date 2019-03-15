@@ -11,10 +11,6 @@ const baseURL = 'https://nyx-in.herokuapp.com/api'
 
 import { createStackNavigator,createAppContainer } from 'react-navigation';
 
-
-
-
-
 const AppNavigator = createStackNavigator({
   LoginS: {
     screen: Login, navigationOptions: { header: null }
@@ -22,9 +18,6 @@ const AppNavigator = createStackNavigator({
   HomeS: {
     screen: Home, navigationOptions: { header: null }
   },
-  
-  
-
 });
 
 const AppStack = createAppContainer(AppNavigator);
@@ -32,11 +25,11 @@ const AppStack = createAppContainer(AppNavigator);
 
 
 export default class App extends Component{
-  
+
   constructor(props)
   {
     super(props)
-   
+
   }
   state=
   {
@@ -51,7 +44,7 @@ export default class App extends Component{
          this.setState({gotoHome:true})
       }else{
         this.setState({gotoHome:false})
-      } 
+      }
     });
 
 
@@ -59,11 +52,11 @@ export default class App extends Component{
 
     if (granted) {
       this.findCoordinates()
-    } 
+    }
     else {}
 
   }
-  
+
 
   componentDidMount()
   {
@@ -74,7 +67,7 @@ export default class App extends Component{
       (position) => {
         const location = JSON.stringify(position);
         // this.setState({location:location},()=>{()=>this._getLocationAsync()});
-         
+
     var url = `${baseURL}/v1/places?lat=${position.coords.latitude}&long=${position.coords.longitude}`;
     fetch(url)
       .then(response => response.json())
@@ -96,7 +89,7 @@ export default class App extends Component{
   };
 
   _getLocationAsync =  () => {
-    
+
     var url = `${baseURL}/v1/places?lat=${this.state.location.coords.latitude}&long=${this.state.location.coords.longitude}`;
     fetch(url)
       .then(response => response.json())
@@ -109,13 +102,13 @@ export default class App extends Component{
       })
       .catch((err) => alert('Failed to fetch places'))
   };
-  
-  
+
+
   render() {
     if(this.state.gotoHome!=null)
     {
       if(this.state.gotoHome==false)
-      { 
+      {
          return(
           // <View style={styles.container}>
             <AppStack/>
@@ -148,10 +141,10 @@ export default class App extends Component{
         </View>
       )
     }
-   
-   
+
+
     // return (
-      
+
     //   <View style={styles.container}>
     //      <Login/>
     //   </View>

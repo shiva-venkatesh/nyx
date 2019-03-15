@@ -3,15 +3,14 @@ import { BackHandler } from 'react-native';
 
 import {
   StyleSheet,
-  View,
   ScrollView,
-  Image,
   Linking,
   TouchableOpacity,
   ActivityIndicator
 } from 'react-native';
 
-import { Divider, Button, Text, Tile } from 'react-native-elements';
+import { Divider, Button } from 'react-native-elements';
+import { Tile, Card, Image, View, Subtitle, Caption } from '@shoutem/ui';
 const baseURL = 'https://nyx-in.herokuapp.com/api'
 
 export default class Collections extends Component {
@@ -22,11 +21,16 @@ export default class Collections extends Component {
   renderTiles() {
     const collectionTiles = this.props.collections.map((collection) => {
       return(
-        <View key={collection.collection_id}>
+        <Card>
           <Image
-            source={{ uri: collection.image_url }}
+            styleName="medium-wide"
+              source={{uri: collection.image_url}}
           />
-        </View>
+          <View styleName="content">
+            <Subtitle>{collection.name}</Subtitle>
+            <Caption>{collection.description}</Caption>
+          </View>
+        </Card>
       );
     })
     return collectionTiles;
@@ -34,7 +38,7 @@ export default class Collections extends Component {
 
   render() {
     return(
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {this.renderTiles()}
       </ScrollView>
     )
