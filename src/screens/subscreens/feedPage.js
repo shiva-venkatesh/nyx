@@ -16,20 +16,25 @@ import { Icon } from 'react-native-elements';
 import FeedCard from '../feedCard';
 // import Pill from '../../ui-components/pill';
 import PlaceDetails from '../placeDetails';
+import Collections from '../collections';
 
 export default class Feed extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedPlace: {}
+      selectedPlace: {},
+      showCollections: false,
+      collections: []
     }
     this.setPlace = this.setPlace.bind(this);
+    this.showCollections = this.showCollections.bind(this);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+    this.handleCollectionsBackButtonClick = this.handleCollectionsBackButtonClick.bind(this);
     this.resetSelectedPlace = this.resetSelectedPlace.bind(this);
   }
 
   componentDidMount() {
-
+    
   }
 
   resetSelectedPlace() {
@@ -52,6 +57,12 @@ export default class Feed extends Component {
     });
     return true;
   }
+  
+  handleCollectionsBackButtonClick() {
+    this.setState({
+      showCollections: false
+    })
+  }
 
   setPlace(place) {
     this.setState({
@@ -59,6 +70,12 @@ export default class Feed extends Component {
     }, () => {
       console.log(this.state.selectedPlace.restaurant.name);
     });
+  }
+  
+  showCollections() {
+    this.setState({
+      showCollections: true
+    })
   }
 
   renderListOfPlaces() {
@@ -76,11 +93,13 @@ export default class Feed extends Component {
     return(
       <ScrollView contentContainerStyle={styles.bgContainer}>
         <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={() => this.showCollections()}>
             <View style={styles.collectionHeadingContainer}>
               <Text style={styles.collectionText}>
                 Explore curated collections of places in your city!
               </Text>
             </View>
+          </TouchableOpacity>
         </View>
         <View contentContainerStyle={styles.bgInnerContainer}>
           <Text style={styles.feedCardsHeadingContainer}>
@@ -113,6 +132,13 @@ export default class Feed extends Component {
   }
 
   render() {
+    if(this.state.showCollections) {
+      return(
+        <ScrollView showsVerticalScrollIndicator={false} styles={styles.container}>
+          <Collections location={this.props.location} handleBackButtonClick={this.handleCollectionsBackButtonClick} />
+        </ScrollView>
+      )
+    }
     return(
       <ScrollView showsVerticalScrollIndicator={false} styles={styles.container}>
         {Object.keys(this.state.selectedPlace).length === 0 && this.state.selectedPlace.constructor === Object ? this.renderListOfPlaces() : this.renderPlaceDetails()}
