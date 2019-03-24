@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import { Divider, Button, Text } from 'react-native-elements';
-const baseURL = 'https://nyx-in.herokuapp.com/api'
+const baseURL = 'https://artemis.nyx.co.in/api'
 
 export default class EventDetails extends Component {
   constructor(props) {

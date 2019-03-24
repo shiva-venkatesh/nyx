@@ -7,7 +7,7 @@ import Storage from './src/helper/storage'
 import Login from './src/screens/auth/login'
 import Home from './src/screens/home'
 import splashScreen from 'react-native-splash-screen'
-const baseURL = 'https://nyx-in.herokuapp.com/api'
+const baseURL = 'https://artemis.nyx.co.in/api'
 
 import { createStackNavigator,createAppContainer } from 'react-navigation';
 

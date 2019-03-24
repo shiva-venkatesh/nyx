@@ -15,7 +15,7 @@ import { SearchBar, Tile } from 'react-native-elements'
 import FeedCard from '../feedCard';
 import EventDetails from '../eventDetails';
 
-const baseURL = 'https://nyx-in.herokuapp.com/api'
+const baseURL = 'https://artemis.nyx.co.in/api'
 
 export default class Discover extends Component {
   state = {

@@ -32,7 +32,7 @@ export default class Collections extends Component {
   }
   
   componentDidMount() {
-    const baseURL = 'https://nyx-in.herokuapp.com/api'
+    const baseURL = 'https://artemis.nyx.co.in/api'
     fetch(`${baseURL}/v1/places/collections/all?lat=${this.props.location.coords.latitude}&long=${this.props.location.coords.longitude}`)
       .then(response => response.json())
       .then(data => {
