@@ -33,10 +33,6 @@ export default class Feed extends Component {
     this.resetSelectedPlace = this.resetSelectedPlace.bind(this);
   }
 
-  componentDidMount() {
-    
-  }
-
   resetSelectedPlace() {
     this.setState({
       selectedPlace: {}
@@ -171,9 +167,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  pill_objects: {
-    marginTop: 15
-  },
   feedCardsHeadingContainer: {
     margin: 10,
     borderBottomWidth: 2,
@@ -188,16 +181,5 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#64818F',
     margin: 5,
-  },
-  cost: {
-    fontSize: 20
-  },
-  header: {
-    marginTop: 10,
-    marginBottom: 10,
-    fontSize: 26,
-    color: '#413C3B',
-    textAlign: 'center',
-    fontFamily: 'proza-libre'
   }
 });
