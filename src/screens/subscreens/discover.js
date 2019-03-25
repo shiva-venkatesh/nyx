@@ -8,7 +8,8 @@ import {
   TouchableHighlight,
   WebView,
   Dimensions,
-  ActivityIndicator
+  ActivityIndicator,
+  Linking
 } from 'react-native'
 
 import { SearchBar, Tile } from 'react-native-elements'
@@ -90,7 +91,7 @@ export default class Discover extends Component {
       const eventCards = this.state.events.map((event) => {
         return(
           <TouchableOpacity
-            onPress={() => this.setActiveEvent(event)}
+            onPress={() => Linking.openURL(event.map_link)}
             key={event._id}
             activeOpacity={1}
           >
