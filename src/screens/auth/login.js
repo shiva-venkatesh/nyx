@@ -146,14 +146,14 @@ export default class Login extends Component {
   }
   render() {
     return(
-      <View style={styles.loginContainer}>
+      <ScrollView style={styles.loginContainer}>
         <View style={styles.Image}>
           <Image source={require('./nyx-icon.png')} />
         </View>
         
           {
             this.state.loginForm==true?
-            <View 
+            <View
             // style={{backgroundColor:'red'}}
             >
             <Input
@@ -181,7 +181,7 @@ export default class Login extends Component {
               onPress={()=>{this.setState({loginForm:false})}}
               />
           </View>:
-          <ScrollView>
+          <View>
             <Input
               label='Name'
               placeholder='Enter your name'
@@ -213,11 +213,11 @@ export default class Login extends Component {
               children={"Login"}
               onPress={()=>{this.setState({loginForm:true})}}
               />
-          </ScrollView>
+          </View>
              
           }
          
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -228,8 +228,9 @@ const styles = StyleSheet.create({
     height:'100%',
     paddingHorizontal:10,
     paddingVertical:15,
-
-    // backgroundColor:'green'
+  },
+  formStyling: {
+    paddingVertical: 10
   },
   Image:{
     alignContent:'center',

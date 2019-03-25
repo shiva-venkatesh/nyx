@@ -67,8 +67,6 @@ export default class Feed extends Component {
   setPlace(place) {
     this.setState({
       selectedPlace: place
-    }, () => {
-      console.log(this.state.selectedPlace.restaurant.name);
     });
   }
   
