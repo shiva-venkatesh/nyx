@@ -21,6 +21,7 @@ export default class Collections extends Component {
     this.renderTiles = this.renderTiles.bind(this);
     this.renderListOfPlaces = this.renderListOfPlaces.bind(this);
     this.setActiveCollection = this.setActiveCollection.bind(this);
+    this.resetCollections = this.resetCollections.bind(this);
   }
   
   state = {
@@ -65,6 +66,14 @@ export default class Collections extends Component {
     }
   }
   
+  resetCollections() {
+    this.setState({
+      activeCollectionName: '',
+      activeCollectionDescription: '',
+      places: [].slice()
+    })
+  }
+  
   renderListOfPlaces() {
     console.log("gets here!!")
     const cards = this.state.places.map((place) => {
@@ -81,10 +90,22 @@ export default class Collections extends Component {
     return(
       <ScrollView style={styles.collectionDescriptionContainer}>
         <View style={styles.collectionTitle}>
-          <Text h3>
+          <TouchableOpacity onPress={() => this.resetCollections()}>
+            <View style={styles.collectionHeadingContainer}>
+              <Icon
+                name='chevron-left'
+                type='font-awesome'
+                color='#6495ed'
+              />
+              <Text style={styles.collectionText}>
+                COLLECTIONS
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <Text h3 style={styles.headingStyle}>
             {this.state.activeCollectionName}
           </Text>
-          <Text>
+          <Text style={styles.collectionDescription}>
             {this.state.activeCollectionDescription}
           </Text>
         </View>
@@ -126,8 +147,23 @@ const styles = StyleSheet.create({
   collectionContainer: {
     flex: 1
   },
+  collectionHeadingContainer: {
+    backgroundColor: 'white',
+    flexDirection: 'row'
+  },
+  collectionText: {
+    color: 'cornflowerblue',
+    margin: 10
+  },
   collectionTitle: {
     margin: 10
+  },
+  headingStyle: {
+    fontFamily: 'Roboto'
+  },
+  collectionDescription: {
+    fontSize: 18,
+    fontFamily: 'Roboto'
   },
   collectionDescriptionContainer: {
     flexDirection: 'column'
