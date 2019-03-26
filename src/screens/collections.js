@@ -14,6 +14,7 @@ import { Icon, Tile, Text } from 'react-native-elements';
 const baseURL = 'https://artemis.nyx.co.in/api'
 
 import FeedCard from './feedCard';
+import PlaceDetails from './placeDetails';
 
 export default class Collections extends Component {
   constructor(props) {
@@ -21,13 +22,16 @@ export default class Collections extends Component {
     this.renderTiles = this.renderTiles.bind(this);
     this.renderListOfPlaces = this.renderListOfPlaces.bind(this);
     this.setActiveCollection = this.setActiveCollection.bind(this);
+    this.setActivePlace = this.setActivePlace.bind(this);
     this.resetCollections = this.resetCollections.bind(this);
+    this.resetSelectedPlace = this.resetSelectedPlace.bind(this);
   }
   
   state = {
     collections: [],
     places: [],
-    activeCollectionName: ''
+    activeCollectionName: '',
+    activePlace: {}
   }
   
   componentWillMount() {
@@ -74,46 +78,68 @@ export default class Collections extends Component {
     })
   }
   
-  renderListOfPlaces() {
-    console.log("gets here!!")
-    const cards = this.state.places.map((place) => {
-      return(
-        <TouchableOpacity
-          onPress={() => console.log(place.restaurant.name)}
-          key={place.restaurant.id}
-          activeOpacity={1}
-        >
-          <FeedCard cardTitle={place.restaurant.name} cardPicture={place.restaurant.thumb} key={place.restaurant.id}/>
-        </TouchableOpacity>
-      );
+  setActivePlace(place) {
+    this.setState({
+      activePlace: Object.assign({}, place)
     })
-    return(
-      <ScrollView style={styles.collectionDescriptionContainer}>
-        <View style={styles.collectionTitle}>
-          <TouchableOpacity onPress={() => this.resetCollections()}>
-            <View style={styles.collectionHeadingContainer}>
-              <Icon
-                name='chevron-left'
-                type='font-awesome'
-                color='#6495ed'
-              />
-              <Text style={styles.collectionText}>
-                COLLECTIONS
-              </Text>
-            </View>
+  }
+  
+  resetSelectedPlace() {
+    this.setState({
+      selectedPlace: {}
+    });
+  }
+  
+  renderListOfPlaces() {
+    if(!(Object.entries(this.state.activePlace).length === 0 && this.state.activePlace.constructor === Object)) {
+      var place_directions = `https://www.google.com/maps/dir/?api=1&origin=${this.props.location.coords.latitude},${this.props.location.coords.longitude}&destination=${this.state.activePlace.restaurant.location.latitude},${this.state.activePlace.restaurant.location.longitude}`
+      return(
+        <PlaceDetails
+          selectedPlace={this.state.activePlace}
+          place_directions={place_directions}
+          resetSelectedPlace={this.resetSelectedPlace}
+        />
+      );
+    } else {
+      const cards = this.state.places.map((place) => {
+        return(
+          <TouchableOpacity
+            onPress={() => this.setActivePlace(place)}
+            key={place.restaurant.id}
+            activeOpacity={1}
+          >
+            <FeedCard cardTitle={place.restaurant.name} cardPicture={place.restaurant.thumb} key={place.restaurant.id}/>
           </TouchableOpacity>
-          <Text h3 style={styles.headingStyle}>
-            {this.state.activeCollectionName}
-          </Text>
-          <Text style={styles.collectionDescription}>
-            {this.state.activeCollectionDescription}
-          </Text>
-        </View>
-        <ScrollView horizontal showsHorizontalScrollIndicator>
-          {cards}
+        );
+      })
+      return(
+        <ScrollView style={styles.collectionDescriptionContainer}>
+          <View style={styles.collectionTitle}>
+            <TouchableOpacity onPress={() => this.resetCollections()}>
+              <View style={styles.collectionHeadingContainer}>
+                <Icon
+                  name='chevron-left'
+                  type='font-awesome'
+                  color='#6495ed'
+                />
+                <Text style={styles.collectionText}>
+                  COLLECTIONS
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <Text h3 style={styles.headingStyle}>
+              {this.state.activeCollectionName}
+            </Text>
+            <Text style={styles.collectionDescription}>
+              {this.state.activeCollectionDescription}
+            </Text>
+          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator>
+            {cards}
+          </ScrollView>
         </ScrollView>
-      </ScrollView>
-    )
+      );      
+    }
   }
   
   renderTiles() {
