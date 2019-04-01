@@ -37,4 +37,3 @@ task wrapper(type: Wrapper) {
     gradleVersion = '4.4'
     distributionUrl = distributionUrl.replace("bin", "all")
 }
-buildscript { repositories { // Add google line if missing before jcenter google() jcenter() } dependencies { // Add this line classpath 'com.google.gms:google-services:4.0.1' } } allprojects { repositories { // Add google line if missing before jcenter google() jcenter() } }
