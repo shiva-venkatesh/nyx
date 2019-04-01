@@ -7,8 +7,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "appcenter-push": "^1.13.0",
     "react": "16.6.3",
     "react-native": "0.57.8",
+    "react-native-code-push": "^5.6.0",
     "react-native-elements": "^0.19.1",
     "react-native-gesture-handler": "^1.0.12",
     "react-native-splash-screen": "^3.1.1",
