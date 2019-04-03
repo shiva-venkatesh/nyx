@@ -10,7 +10,9 @@ import {
   TouchableOpacity
 } from 'react-native'
 
-import { Icon, Tile, Text } from 'react-native-elements';
+import { Icon, Text } from 'react-native-elements';
+import { ImageBackground, Tile, Title, Overlay } from '@shoutem/ui';
+
 const baseURL = 'https://artemis.nyx.co.in/api'
 
 import FeedCard from './feedCard';
@@ -147,13 +149,23 @@ export default class Collections extends Component {
       const collectionTiles = this.state.collections.map((collection) => {
         console.log((Object.keys(collection.collection)))
         return(
-            <Tile
-              imageSrc={{ uri: collection.collection.image_url }}
-              onPress={() => this.setActiveCollection(collection.collection.collection_id, collection.collection.title, collection.collection.description)}
-              title={collection.collection.title}
-              key={collection.collection.collection_id}
-              featured
-            />
+          <TouchableOpacity
+            onPress={() => this.setActiveCollection(collection.collection.collection_id, collection.collection.title, collection.collection.description)}
+            key={collection.collection.collection_id}
+          >
+            <View style={styles.tileContainer}>
+              <ImageBackground
+                styleName="large-banner"
+                source={{uri: collection.collection.image_url}}
+              >
+                <Tile>
+                  <Overlay styleName="image-overlay">
+                    <Title styleName="sm-gutter-horizontal">{collection.collection.title}</Title>
+                  </Overlay>
+                </Tile>
+              </ImageBackground>   
+            </View>
+          </TouchableOpacity>
         );
       })
       return collectionTiles;
@@ -172,6 +184,9 @@ export default class Collections extends Component {
 const styles = StyleSheet.create({
   collectionContainer: {
     flex: 1
+  },
+  tileContainer : {
+    paddingBottom: 4
   },
   collectionHeadingContainer: {
     backgroundColor: 'white',
