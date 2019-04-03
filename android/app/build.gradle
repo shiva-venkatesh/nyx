@@ -111,10 +111,10 @@ android {
     signingConfigs {
       release {
           if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-              storeFile file('app/my-release-key.keystore')
-              storePassword Erebus26*
-              keyAlias my-key-alias
-              keyPassword Erebus26*
+              storeFile file(MYAPP_RELEASE_STORE_FILE)
+              storePassword MYAPP_RELEASE_STORE_PASSWORD
+              keyAlias MYAPP_RELEASE_KEY_ALIAS
+              keyPassword MYAPP_RELEASE_KEY_PASSWORD
           }
       }
     }
@@ -150,6 +150,7 @@ android {
 
 dependencies {
     compile project(':react-native-code-push')
+    compile project(':appcenter-push')
     compile project(':react-native-splash-screen')
     compile project(':react-native-gesture-handler')
     compile project(':react-native-vector-icons')

@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.microsoft.codepush.react.CodePush;
+import com.microsoft.appcenter.reactnative.push.AppCenterReactNativePushPackage;
+import com.microsoft.codepush.react.CodePush;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -34,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
+            new AppCenterReactNativePushPackage(MainApplication.this),
             new SplashScreenReactPackage(),
             new RNGestureHandlerPackage(),
             new VectorIconsPackage()
