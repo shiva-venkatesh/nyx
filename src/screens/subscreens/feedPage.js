@@ -89,9 +89,10 @@ export default class Feed extends Component {
         <View style={styles.iconContainer}>
           <TouchableOpacity onPress={() => this.showCollections()}>
             <View style={styles.collectionHeadingContainer}>
-              <Text style={styles.collectionText}>
-                Explore curated collections of places in your city!
-              </Text>
+              <Image
+                style={styles.collectionHeadlineImage}
+                source={require('../../assets/curated-min.png')}
+              />
             </View>
           </TouchableOpacity>
         </View>
@@ -153,7 +154,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   collectionHeadingContainer: {
-    backgroundColor: '#64818F'
+    backgroundColor: '#64818F',
+  },
+  collectionHeadlineImage: {
+    height: 100
   },
   collectionText: {
     color: 'white',
