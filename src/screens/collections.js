@@ -2,15 +2,15 @@ import React, { Component } from 'react'
 
 import {
   StyleSheet,   // CSS-like styles
-  View,
   ScrollView,
-  Image,
   Linking,
   BackHandler,
   TouchableOpacity
 } from 'react-native'
 
 import { Icon, Tile, Text } from 'react-native-elements';
+import { Card, Image, View, Subtitle, Caption } from '@shoutem/ui';
+
 const baseURL = 'https://artemis.nyx.co.in/api'
 
 import FeedCard from './feedCard';
@@ -108,7 +108,16 @@ export default class Collections extends Component {
             key={place.restaurant.id}
             activeOpacity={1}
           >
-            <FeedCard cardTitle={place.restaurant.name} cardPicture={place.restaurant.thumb} key={place.restaurant.id}/>
+            <Card>
+              <View styleName="content">
+                <Image
+                styleName="medium-square"
+                source={{uri: place.restaurant.thumb}}
+                />
+                <Subtitle>{place.restaurant.name}</Subtitle>
+                <Caption>{place.restaurant.location.locality_verbose}</Caption>
+              </View>
+            </Card>            
           </TouchableOpacity>
         );
       })
