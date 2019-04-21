@@ -10,7 +10,9 @@ import {
   TouchableOpacity
 } from 'react-native'
 
-import { Icon, Tile, Text } from 'react-native-elements';
+import { Icon, Text } from 'react-native-elements';
+import { ImageBackground, Tile, Title, Overlay, Subtitle, Button, Caption } from '@shoutem/ui';
+
 const baseURL = 'https://artemis.nyx.co.in/api'
 
 import FeedCard from './feedCard';
@@ -147,13 +149,18 @@ export default class Collections extends Component {
       const collectionTiles = this.state.collections.map((collection) => {
         console.log((Object.keys(collection.collection)))
         return(
-            <Tile
-              imageSrc={{ uri: collection.collection.image_url }}
-              onPress={() => this.setActiveCollection(collection.collection.collection_id, collection.collection.title, collection.collection.description)}
-              title={collection.collection.title}
-              key={collection.collection.collection_id}
-              featured
-            />
+          <TouchableOpacity onPress={() => this.setActiveCollection(collection.collection.collection_id, collection.collection.title, collection.collection.description)}>
+            <ImageBackground
+              styleName="large-banner"
+              source={{ uri: collection.collection.image_url }}
+            >
+              <Tile>
+                <Overlay styleName="solid-bright">
+                  <Title>{collection.collection.title}</Title>
+                </Overlay>
+              </Tile>
+            </ImageBackground>
+          </TouchableOpacity>
         );
       })
       return collectionTiles;
