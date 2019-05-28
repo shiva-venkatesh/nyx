@@ -85,6 +85,8 @@ export default class Feed extends Component {
             cardImage={place.restaurant.thumb}
             cardTitle={place.restaurant.name}
             key={place.restaurant.id}
+            subtitle={place.restaurant.location.locality}
+            type={place.restaurant.cuisines}
           />
         </TouchableOpacity>
       )

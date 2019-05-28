@@ -6,7 +6,7 @@ import {
 
 import { Row, View, Image, Caption, Subtitle } from '@shoutem/ui';
 
-const MediaObjectCard = ({cardImage, cardTitle, key}) => {
+const MediaObjectCard = ({cardImage, cardTitle, key, subtitle, type}) => {
   return(
     <Row>
       <Image
@@ -16,8 +16,7 @@ const MediaObjectCard = ({cardImage, cardTitle, key}) => {
       <View styleName="vertical stretch space-between">
         <Subtitle>{cardTitle}</Subtitle>
         <View styleName="horizontal space-between">
-          <Caption>3 days ago</Caption>
-          <Caption>12:16</Caption>
+          <Caption>{subtitle}</Caption>
         </View>
       </View>
     </Row>
