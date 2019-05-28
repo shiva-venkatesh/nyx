@@ -3,10 +3,10 @@ import React, { Component } from 'react'
 import {
   StyleSheet,   // CSS-like styles
   Text,         // Renders text
-  View,
   ScrollView,
-  Image,
   Linking,
+  View,
+  Image,
   BackHandler,
   TouchableOpacity
 } from 'react-native'
@@ -14,7 +14,8 @@ import {
 import { Icon } from 'react-native-elements';
 
 import FeedCard from '../feedCard';
-// import Pill from '../../ui-components/pill';
+import MediaObjectCard from '../mediaObjectCard';
+
 import PlaceDetails from '../placeDetails';
 import Collections from '../collections';
 
@@ -80,7 +81,11 @@ export default class Feed extends Component {
           key={place.restaurant.id}
           activeOpacity={1}
         >
-          <FeedCard cardTitle={place.restaurant.name} cardPicture={place.restaurant.thumb} key={place.restaurant.id}/>
+          <MediaObjectCard
+            cardImage={place.restaurant.thumb}
+            cardTitle={place.restaurant.name}
+            key={place.restaurant.id}
+          />
         </TouchableOpacity>
       )
     });
