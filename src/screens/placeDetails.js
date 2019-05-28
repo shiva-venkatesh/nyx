@@ -52,12 +52,19 @@ export default class PlaceDetails extends Component {
       </View>
     )
   }
+  
+  renderDetails() {
+    return(
+      <View style={{margin: 10, height: 50, backgroundColor: 'powderblue'}} />
+    )
+  }
 
   render() {
     if(!(Object.keys(this.props.selectedPlace).length === 0 && this.props.selectedPlace.constructor === Object)) {
       return(
         <ScrollView
           showsVerticalScrollIndicator={true}
+          style={styles.placeDetailsContainer}
         >
           <View style={styles.placeContainer}>
             <View style={styles.placeHeading}>
@@ -102,7 +109,7 @@ export default class PlaceDetails extends Component {
           <Divider style={{ backgroundColor: '#A9A9A9' }} />
 
           {this.renderCostForTwo()}
-
+          {this.renderDetails()}
           <Divider style={{ backgroundColor: '#A9A9A9' }} />
 
           {this.renderCuisines()}
@@ -118,6 +125,10 @@ const styles = StyleSheet.create({
   placeContainer: {
     marginTop: 15
   },
+  detailStyle: {
+    height: '200',
+    backgroundColor: 'lightblue'
+  },
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center'
@@ -131,7 +142,6 @@ const styles = StyleSheet.create({
   },
   localityText: {
     color: '#64818F',
-    // fontWeight: 'bold',
     fontFamily: 'proza-libre',
     textAlign: 'center',
     fontSize: 20
@@ -154,13 +164,15 @@ const styles = StyleSheet.create({
   cuisineText: {
     margin: 5,
     color: '#413C3B',
-    // fontFamily: 'overlock',
     textAlign: 'center',
     fontSize: 20
   },
   linkContainer: {
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  placeDetailsContainer: {
+    margin: 10
   },
   firstRowLink2: {
     color: '#234a95',
