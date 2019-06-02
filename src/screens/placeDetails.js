@@ -53,12 +53,6 @@ export default class PlaceDetails extends Component {
     )
   }
   
-  renderDetails() {
-    return(
-      <View style={{margin: 10, height: 50, backgroundColor: 'powderblue'}} />
-    )
-  }
-
   render() {
     if(!(Object.keys(this.props.selectedPlace).length === 0 && this.props.selectedPlace.constructor === Object)) {
       return(
@@ -109,7 +103,6 @@ export default class PlaceDetails extends Component {
           <Divider style={{ backgroundColor: '#A9A9A9' }} />
 
           {this.renderCostForTwo()}
-          {this.renderDetails()}
           <Divider style={{ backgroundColor: '#A9A9A9' }} />
 
           {this.renderCuisines()}
